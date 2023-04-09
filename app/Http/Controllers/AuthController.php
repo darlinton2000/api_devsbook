@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
@@ -16,6 +17,70 @@ class AuthController extends Controller
                 'unauthorized'
             ]
         ]);
+    }
+
+    /**
+     * Metodo para retornar algo quando nao for autorizado
+     * @return JsonResponse
+     */
+    public function unauthorized()
+    {
+        return response()->json(['error' => 'Nao autorizado'], 401);
+    }
+
+    /**
+     * Faz o login na API
+     * @param Request $request
+     * @return string[]
+     */
+    public function login(Request $request)
+    {
+        $array = ['error' => ''];
+
+        // Recebendo os dados
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        if ($email && $password) {
+            $token = auth()->attempt([
+                'email'    => $email,
+                'password' => $password
+            ]);
+
+            if (!$token) {
+                $array['error'] = 'E-mail e/ou senha errados';
+                return $array;
+            }
+
+            $array['token'] = $token;
+            return $array;
+        }
+
+        $array['error'] = 'Dados não enviados!';
+        return $array;
+    }
+
+    /**
+     * Faz o logout na API
+     * @return string[]
+     */
+    public function logout()
+    {
+        auth()->logout();
+        return ['error' => ''];
+    }
+
+    /**
+     * Atualiza o token
+     * @return array
+     */
+    public function refresh()
+    {
+        $token = auth()->refresh();
+        return [
+            'error' => '',
+            'token' => $token
+        ];
     }
 
     /**
