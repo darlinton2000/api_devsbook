@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class PostLike extends Model
 {
     public $timestamps = false;
-    protected $table = '´postlikes';
+    protected $table = 'postlikes';
 }
