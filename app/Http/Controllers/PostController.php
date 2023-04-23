@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\PostComment;
 use App\PostLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,33 @@ class PostController extends Controller
             $array['likeCount'] = PostLike::where('id_post', $id)->count();
         } else {
             $array['error'] = 'Post nao existe!';
+            return $array;
+        }
+
+        return $array;
+    }
+
+    public function comment(Request $request, $id)
+    {
+        $array = ['error' => ''];
+
+        $txt = $request->input('txt');
+
+        $postExists = Post::find($id);
+        if ($postExists) {
+            if ($txt) {
+                $newComment = new PostComment();
+                $newComment->id_post = $id;
+                $newComment->id_user = $this->loggedUser['id'];
+                $newComment->created_at = date('Y-m-d H:i:s');
+                $newComment->body = $txt;
+                $newComment->save();
+            } else {
+                $array['error'] = 'Nao enviou a mensagem.';
+                return $array;
+            }
+        } else {
+            $array['error'] = 'Post nao existe';
             return $array;
         }
 
