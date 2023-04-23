@@ -167,6 +167,12 @@ class UserController extends Controller
         return $array;
     }
 
+    /**
+     * Pegando informações do usuário
+     * @param $id
+     * @return string[]
+     * @throws \Exception
+     */
     public function read($id = false)
     {
         $array = ['error' => ''];
