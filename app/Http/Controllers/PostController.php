@@ -17,6 +17,11 @@ class PostController extends Controller
         $this->loggedUser = auth()->user();
     }
 
+    /**
+     * Método para dar like no post
+     * @param $id
+     * @return string[]
+     */
     public function like($id)
     {
         $array = ['error' => ''];
@@ -51,6 +56,12 @@ class PostController extends Controller
         return $array;
     }
 
+    /**
+     * Método para comentar no post
+     * @param Request $request
+     * @param $id
+     * @return string[]
+     */
     public function comment(Request $request, $id)
     {
         $array = ['error' => ''];
