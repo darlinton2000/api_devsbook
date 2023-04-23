@@ -42,4 +42,4 @@ Route::post('/feed', 'FeedController@create');
 Route::post('/post/{id}/like', 'PostController@like');
 Route::post('/post/{id}/comment', 'PostController@comment');
 
-//Route::get('/search', 'SearchController@search');
+Route::get('/search', 'SearchController@search');
