@@ -34,7 +34,7 @@ Route::get('/feed', 'FeedController@read');
 Route::get('/user/feed', 'FeedController@userFeed');
 Route::get('/user/{id}/feed', 'FeedController@userFeed');
 Route::post('/user/{id}/follow', 'UserController@follow');
-//Route::get('/user/{id}/followers', 'UserController@followers');
+Route::get('/user/{id}/followers', 'UserController@followers');
 //Route::get('/user/{id}/photos', 'UserController@photos');
 
 Route::get('/user', 'UserController@read');
